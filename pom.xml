@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.example.travelexpertsphase3desktop/org.example.travelexpertsphase3desktop.HelloApplication
+                                org.example.travelexpertsphase3desktop/org.example.travelexpertsphase3desktop.SuppliersApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
