@@ -1,7 +1,11 @@
 package org.example.travelexpertsphase3desktop;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.function.Supplier;
+
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -28,13 +32,18 @@ public class SuppliersController {
     private Button btnSearch;
 
     @FXML
-    private TableView<?> tbvSupplier;
+    private TableView<String> tbvSupplier;
 
     @FXML
     private TextField txtSupplier;
 
+    private SuppliersTableController suppliersTbl;
+
+    private ObservableList<String> suppliers;
+
+
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
         assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'Suppliers-view.fxml'.";
         assert btnDelete != null : "fx:id=\"btnDelete\" was not injected: check your FXML file 'Suppliers-view.fxml'.";
         assert btnEdit != null : "fx:id=\"btnEdit\" was not injected: check your FXML file 'Suppliers-view.fxml'.";
@@ -42,6 +51,10 @@ public class SuppliersController {
         assert tbvSupplier != null : "fx:id=\"tbvSupplier\" was not injected: check your FXML file 'Suppliers-view.fxml'.";
         assert txtSupplier != null : "fx:id=\"txtSupplier\" was not injected: check your FXML file 'Suppliers-view.fxml'.";
 
-    }
+        suppliersTbl = new SuppliersTableController();
+        suppliers = suppliersTbl.fetchData();
 
+        tbvSupplier.setItems(suppliers);
+
+    }
 }

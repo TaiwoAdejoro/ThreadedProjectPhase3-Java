@@ -12,7 +12,7 @@ public class DBconnection {
     public static Properties loadProperties() {
         Properties prop = new Properties();
 
-        try (InputStream in = DBconnection.class.getClassLoader().getResourceAsStream("DBconfig")) {
+        try (InputStream in = DBconnection.class.getClassLoader().getResourceAsStream("DBconfig.properties")) {
             if (in == null) {
                 System.out.println("Sorry, there was an error loading the Config file");
                 return null;
