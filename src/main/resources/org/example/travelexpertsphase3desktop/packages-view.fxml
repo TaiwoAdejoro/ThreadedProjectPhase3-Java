@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertsphase3desktop.Utils.PackageManagementController">
+    <top>
+        <Label text="Package Management" BorderPane.alignment="CENTER">
+            <font>
+                <Font size="24.0" />
+            </font>
+            <BorderPane.margin>
+                <Insets bottom="11.0" left="11.0" right="11.0" top="11.0" />
+            </BorderPane.margin>
+        </Label>
+    </top>
+    <center>
+        <TableView fx:id="tvPackages" prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colPkgId" prefWidth="75.0" text="Id" />
+                <TableColumn fx:id="colPkgName" prefWidth="150.0" text="Package Name" />
+                <TableColumn fx:id="colPkgStartDate" prefWidth="150.0" text="Start Date" />
+                <TableColumn fx:id="colPkgEndDate" prefWidth="150.0" text="End Date" />
+                <TableColumn fx:id="colPkgDesc" prefWidth="200.0" text="Description" />
+                <TableColumn fx:id="colPkgBasePrice" prefWidth="100.0" text="Base Price" />
+                <TableColumn fx:id="colPkgAgencyComm" prefWidth="100.0" text="Agency Commission" />
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <Button fx:id="btnAddPackage" mnemonicParsing="false" text="Add Package" BorderPane.alignment="CENTER" />
+    </bottom>
+</BorderPane>
