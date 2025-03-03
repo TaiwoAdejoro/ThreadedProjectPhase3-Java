@@ -34,8 +34,10 @@ public class DBconnection {
         String url = prop.getProperty("URL");
         String user = prop.getProperty("USER");
         String password = prop.getProperty("PASS");
+        System.out.println("Connecting to " + url);
 
         try {
+            System.out.println("Connection to " + url + " successful");
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             e.printStackTrace();
