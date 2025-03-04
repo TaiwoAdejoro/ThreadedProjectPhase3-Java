@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.input.MouseEvent?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.travelexpertsphase3desktop.controllers.PackageManagementController">
+    <top>
+        <VBox spacing="10" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Package Management">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="11.0" left="11.0" right="11.0" top="11.0" />
+                    </VBox.margin>
+                </Label>
+                <HBox spacing="5" alignment="CENTER">
+                    <children>
+                        <Label text="Search: " />
+                        <TextField fx:id="tfSearch" promptText="Search packages..." />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="tvPackages" prefHeight="300.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colPkgId" prefWidth="75.0" text="Id" />
+                <TableColumn fx:id="colPkgName" prefWidth="150.0" text="Package Name" />
+                <TableColumn fx:id="colPkgStartDate" prefWidth="150.0" text="Start Date" />
+                <TableColumn fx:id="colPkgEndDate" prefWidth="150.0" text="End Date" />
+                <TableColumn fx:id="colPkgDesc" prefWidth="200.0" text="Description" />
+                <TableColumn fx:id="colPkgBasePrice" prefWidth="100.0" text="Base Price" />
+                <TableColumn fx:id="colPkgAgencyComm" prefWidth="100.0" text="Agency Commission" />
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" spacing="10" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="btnAddPackage" text="Add Package" onMouseClicked="#showAddPackageDialog" />
+                <Button fx:id="btnEditPackage" text="Edit Package" onMouseClicked="#editPackage" />
+                <Button fx:id="btnDeletePackage" text="Delete Package" onMouseClicked="#deletePackage" />
+            </children>
+            <HBox.margin>
+                <Insets top="10.0" bottom="10.0" />
+            </HBox.margin>
+        </HBox>
+    </bottom>
+</BorderPane>
