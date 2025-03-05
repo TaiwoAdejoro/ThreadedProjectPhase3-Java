@@ -1,15 +1,15 @@
-package org.example.travelexpertsphase3desktop;
+package org.example.travelexpertsphase3desktop.Controllers;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.function.Supplier;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import org.example.travelexpertsphase3desktop.SuppliersTableController;
 
 public class SuppliersController {
 
@@ -55,6 +55,5 @@ public class SuppliersController {
         suppliers = suppliersTbl.fetchData();
 
         tbvSupplier.setItems(suppliers);
-
     }
 }
