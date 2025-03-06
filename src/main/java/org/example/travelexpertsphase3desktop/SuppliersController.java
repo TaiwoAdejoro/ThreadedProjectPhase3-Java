@@ -1,18 +1,19 @@
-package org.example.travelexpertsphase3desktop.Controllers;
+package org.example.travelexpertsphase3desktop;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.function.Supplier;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import org.example.travelexpertsphase3desktop.Dao.SuppliersDAO;
-import org.example.travelexpertsphase3desktop.Models.Suppliers;
-import org.example.travelexpertsphase3desktop.SuppliersTableController;
+import javafx.stage.Stage;
 
 public class SuppliersController {
 
@@ -34,8 +35,6 @@ public class SuppliersController {
     @FXML
     private TextField txtSupplier;
 
-    private SuppliersTableController suppliersTbl;
-
     private ObservableList<Suppliers> suppliers = FXCollections.observableArrayList();
 
     @FXML
@@ -44,11 +43,7 @@ public class SuppliersController {
     @FXML
     private TableColumn<Supplier, String> colSuppName;
 
-    private final SuppliersDAO suppliersDAO;
-
-    public SuppliersController(SuppliersDAO suppliersDAO) {
-        this.suppliersDAO = suppliersDAO;
-    }
+    private final SuppliersDAO suppliersDAO = new SuppliersDAO();
 
 
     @FXML
@@ -60,9 +55,6 @@ public class SuppliersController {
         assert tbvSupplier != null : "fx:id=\"tbvSupplier\" was not injected: check your FXML file 'Suppliers-view.fxml'.";
         assert txtSupplier != null : "fx:id=\"txtSupplier\" was not injected: check your FXML file 'Suppliers-view.fxml'.";
 
-        getSuppliers();
-
-        setTable();
     }
 
     private void getSuppliers() {
@@ -74,15 +66,17 @@ public class SuppliersController {
         }
     }
 
-    private void addSupplier() {}
+    private void addSupplier() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(""));
+        Stage stage = new Stage();
+        stage.setTitle("Add a new Supplier");
+
+        stage.setScene(new Scene(loader.load()));
+    }
 
     private void editSupplier() {}
 
     private void deleteSupplier() {}
 
-    private void setTable() {
-        colSuppId.setCellValueFactory(colSuppId.getCellValueFactory());
-        colSuppName.setCellValueFactory(colSuppName.getCellValueFactory());
-    }
 
 }

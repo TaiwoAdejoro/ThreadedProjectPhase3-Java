@@ -1,4 +1,4 @@
-package org.example.travelexpertsphase3desktop.Models;
+package org.example.travelexpertsphase3desktop;
 
 public class Suppliers {
     private int id;

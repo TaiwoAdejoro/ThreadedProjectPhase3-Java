@@ -1,7 +1,4 @@
-package org.example.travelexpertsphase3desktop.Dao;
-
-import org.example.travelexpertsphase3desktop.DBconnection;
-import org.example.travelexpertsphase3desktop.Models.Suppliers;
+package org.example.travelexpertsphase3desktop;
 
 import java.sql.*;
 import java.util.ArrayList;
