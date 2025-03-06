@@ -39,8 +39,8 @@ public class SuppliersDAO {
         try (Connection conn = DBconnection.getConnection();
              PreparedStatement stmnt = conn.prepareStatement(query)) {
             //receive supplier Information to input into database
-            stmnt.setInt(1, supplier.getId());
-            stmnt.setString(2, supplier.getName());
+            stmnt.setInt(1, supplier.getSupplierId());
+            stmnt.setString(2, supplier.getSupplierName());
             stmnt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("There was an error connecting to the database");
@@ -54,8 +54,8 @@ public class SuppliersDAO {
         try (Connection conn = DBconnection.getConnection();
              PreparedStatement stmnt = conn.prepareStatement(query)) {
             //receive supplier name and id for update
-            stmnt.setString(1, supplier.getName());
-            stmnt.setInt(2, supplier.getId());
+            stmnt.setString(1, supplier.getSupplierName());
+            stmnt.setInt(2, supplier.getSupplierId());
             stmnt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("There was an error connecting to the database");
@@ -68,7 +68,7 @@ public class SuppliersDAO {
         try (Connection conn = DBconnection.getConnection();
         PreparedStatement stmnt = conn.prepareStatement(query)) {
             //check for supplier ID for deletion
-            stmnt.setInt(1, supplier.getId());
+            stmnt.setInt(1, supplier.getSupplierId());
             stmnt.executeUpdate();
         } catch (SQLException r) {
             System.out.println("There was an error connecting to the database");

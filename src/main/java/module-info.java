@@ -3,6 +3,7 @@ module org.example.travelexpertsphase3desktop {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
+    requires mysql.connector.j;
 
 
     opens org.example.travelexpertsphase3desktop to javafx.fxml;

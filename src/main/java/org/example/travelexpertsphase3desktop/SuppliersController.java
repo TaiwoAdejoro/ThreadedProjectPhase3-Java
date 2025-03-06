@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class SuppliersController {
@@ -38,10 +35,10 @@ public class SuppliersController {
     private ObservableList<Suppliers> suppliers = FXCollections.observableArrayList();
 
     @FXML
-    private TableColumn<Supplier, Integer> colSuppId;
+    private TableColumn<Suppliers, Integer> colSuppId;
 
     @FXML
-    private TableColumn<Supplier, String> colSuppName;
+    private TableColumn<Suppliers, String> colSuppName;
 
     private final SuppliersDAO suppliersDAO = new SuppliersDAO();
 
@@ -55,8 +52,18 @@ public class SuppliersController {
         assert tbvSupplier != null : "fx:id=\"tbvSupplier\" was not injected: check your FXML file 'Suppliers-view.fxml'.";
         assert txtSupplier != null : "fx:id=\"txtSupplier\" was not injected: check your FXML file 'Suppliers-view.fxml'.";
 
+        setTableData();
+        getSuppliers();
+
     }
 
+    //declare TableView Data
+    private void setTableData() {
+        colSuppId.setCellValueFactory(cellData -> cellData.getValue().supplierIdProperty().asObject());
+        colSuppName.setCellValueFactory(cellData -> cellData.getValue().supplierNameProperty());;
+    }
+
+    //retrieve Supplier Data from DB
     private void getSuppliers() {
         try {
             suppliers.setAll(suppliersDAO.getSuppliers());
@@ -66,6 +73,7 @@ public class SuppliersController {
         }
     }
 
+    //open AddSupplier View
     private void addSupplier() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(""));
         Stage stage = new Stage();
@@ -74,9 +82,19 @@ public class SuppliersController {
         stage.setScene(new Scene(loader.load()));
     }
 
+    //Edit Existing Supplier
     private void editSupplier() {}
 
+    //delete supplier from DB
     private void deleteSupplier() {}
 
+    //display Alert
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 }
