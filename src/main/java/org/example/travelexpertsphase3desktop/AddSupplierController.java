@@ -1,12 +1,16 @@
 package org.example.travelexpertsphase3desktop;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 public class AddSupplierController {
 
@@ -50,7 +54,11 @@ public class AddSupplierController {
         });
 
         btnExit.setOnAction(event -> {
-            exit();
+            try {
+                exit();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -68,8 +76,14 @@ public class AddSupplierController {
         });
     }
 
-    private void exit() {
-        System.exit(0);
+    @FXML
+    private void exit() throws IOException {
+        FXMLLoader loader = new FXMLLoader(SuppliersApplication.class.getResource("Suppliers-view.fxml"));
+        Stage stage = new Stage();
+        stage.setTitle("Suppliers Table");
+        stage.setScene(new Scene(loader.load()));
+        SuppliersController suppliersController = loader.getController();
+        stage.showAndWait();
     }
 
 }
