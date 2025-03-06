@@ -2,7 +2,6 @@ package org.example.travelexpertsphase3desktop;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.function.Supplier;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +26,7 @@ public class SuppliersController {
     private Button btnSearch;
 
     @FXML
-    private TableView<String> tbvSupplier;
+    private TableView<Suppliers> tbvSupplier;
 
     @FXML
     private TextField txtSupplier;
@@ -52,15 +51,37 @@ public class SuppliersController {
         assert tbvSupplier != null : "fx:id=\"tbvSupplier\" was not injected: check your FXML file 'Suppliers-view.fxml'.";
         assert txtSupplier != null : "fx:id=\"txtSupplier\" was not injected: check your FXML file 'Suppliers-view.fxml'.";
 
-        setTableData();
+        //load TableView Data
+        setTableColumnData();
+        //load SuppliersDB into TableView
         getSuppliers();
 
+        tbvSupplier.setItems(suppliers);
+
+        btnAdd.setOnAction(e -> {
+            try {
+                addSupplierWindow();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        btnEdit.setOnAction(e -> {
+           try {
+               editSupplier();
+           } catch (IOException ex) {
+               throw new RuntimeException(ex);
+           }
+        });
+        btnDelete.setOnAction(e -> {
+            deleteSupplier();
+        });
     }
 
     //declare TableView Data
-    private void setTableData() {
+    private void setTableColumnData() {
         colSuppId.setCellValueFactory(cellData -> cellData.getValue().supplierIdProperty().asObject());
-        colSuppName.setCellValueFactory(cellData -> cellData.getValue().supplierNameProperty());;
+        colSuppName.setCellValueFactory(cellData -> cellData.getValue().supplierNameProperty());
+        ;
     }
 
     //retrieve Supplier Data from DB
@@ -74,19 +95,57 @@ public class SuppliersController {
     }
 
     //open AddSupplier View
-    private void addSupplier() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(""));
+    @FXML
+    private void addSupplierWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Suppliers_editor_view.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Add a new Supplier");
 
         stage.setScene(new Scene(loader.load()));
+        AddSupplierController controller = loader.getController();
+
+        stage.showAndWait();
     }
 
     //Edit Existing Supplier
-    private void editSupplier() {}
+    @FXML
+    private void editSupplier() throws IOException {
+        Suppliers editSuppliers = tbvSupplier.getSelectionModel().getSelectedItem();
+        if (editSuppliers == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Suppliers_editor_view.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("Edit Supplier");
+
+                stage.setScene(new Scene(loader.load()));
+                AddSupplierController controller = loader.getController();
+
+                stage.showAndWait();
+            } catch (Exception e) {
+                System.out.println("There was a problem getting the suppliers.");
+            }
+        } else {
+            showAlert("Error", "Please select a supplier");
+        }
+    }
 
     //delete supplier from DB
-    private void deleteSupplier() {}
+    @FXML
+    private void deleteSupplier() {
+        Suppliers selectedSupplier = tbvSupplier.getSelectionModel().getSelectedItem();
+        if (selectedSupplier != null) {
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, "are you sure you wish to delete this supplier?", ButtonType.YES, ButtonType.NO);
+            confirmationAlert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.YES) {
+                    suppliersDAO.deleteSupplier(selectedSupplier);
+                } else {
+                    showAlert("Error", "Failed to delete supplier.");
+                }
+            });
+        } else {
+            showAlert("Error", "No supplier selected.");
+        }
+    }
 
     //display Alert
     private void showAlert(String title, String message) {

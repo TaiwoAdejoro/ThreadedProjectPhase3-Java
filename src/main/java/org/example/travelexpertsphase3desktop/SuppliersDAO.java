@@ -1,5 +1,7 @@
 package org.example.travelexpertsphase3desktop;
 
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +23,11 @@ public class SuppliersDAO {
              ResultSet rs = stmnt.executeQuery(query)) {
             //receive info from Suppliers DB to insert into new List
             while (rs.next()) {
-                int supplierId = rs.getInt("supplier_id");
-                String supplierName = rs.getString("supplier_name");
+                int supplierId = rs.getInt("SupplierID");
+                String supplierName = rs.getString("SupName");
                 Suppliers supp = new Suppliers(supplierId, supplierName);
                 suppliersList.add(supp);
+                System.out.println(supplierName);
             }
         } catch (SQLException e) {
             System.out.println("There was an error connecting to the database");
@@ -33,14 +36,14 @@ public class SuppliersDAO {
         return suppliersList;
     }
 
-    public void addSupplier(Suppliers supplier) {
+    public void addSupplier(Integer supplierId, String supplierName) {
         String query = "insert into suppliers values(?,?)";
 
         try (Connection conn = DBconnection.getConnection();
              PreparedStatement stmnt = conn.prepareStatement(query)) {
             //receive supplier Information to input into database
-            stmnt.setInt(1, supplier.getSupplierId());
-            stmnt.setString(2, supplier.getSupplierName());
+            stmnt.setInt(1, supplierId);
+            stmnt.setString(2, supplierName);
             stmnt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("There was an error connecting to the database");
