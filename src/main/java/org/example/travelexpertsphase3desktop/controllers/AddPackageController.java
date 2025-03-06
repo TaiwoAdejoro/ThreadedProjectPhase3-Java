@@ -17,8 +17,8 @@ public class AddPackageController {
     @FXML private TextField tfPkgBasePrice;
     @FXML private TextField tfPkgAgencyComm;
     @FXML private Button btnSave;
-    @FXML private Button btnCancel;
-    @FXML private Button btnDelete;
+   // @FXML private Button btnCancel;
+    //@FXML private Button btnDelete;
 
     private Package selectedPackage;
     private boolean isEditMode = false;
@@ -75,8 +75,8 @@ public class AddPackageController {
         }
 
         // Convert dates to "YYYY-MM-DD" format
-        String formattedStartDate = startDate.toString();
-        String formattedEndDate = endDate.toString();
+       //String formattedStartDate = startDate.toString();
+        //String formattedEndDate = endDate.toString();
 
         if (isEditMode) {
             selectedPackage.setPackageName(name);
