@@ -41,6 +41,8 @@ public class SuppliersController {
 
     private final SuppliersDAO suppliersDAO = new SuppliersDAO();
 
+    private Suppliers selectedSupplier;
+
 
     @FXML
     void initialize() throws SQLException {
@@ -66,11 +68,7 @@ public class SuppliersController {
             }
         });
         btnEdit.setOnAction(e -> {
-           try {
-               editSupplier();
-           } catch (IOException ex) {
-               throw new RuntimeException(ex);
-           }
+           try {editSupplier();} catch (IOException ex) {throw new RuntimeException(ex);}
         });
         btnDelete.setOnAction(e -> {
             deleteSupplier();
@@ -110,8 +108,8 @@ public class SuppliersController {
     //Edit Existing Supplier
     @FXML
     private void editSupplier() throws IOException {
-        Suppliers editSuppliers = tbvSupplier.getSelectionModel().getSelectedItem();
-        if (editSuppliers == null) {
+        getSelectedSupplier();
+        if (selectedSupplier != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("Suppliers_editor_view.fxml"));
                 Stage stage = new Stage();
@@ -119,6 +117,7 @@ public class SuppliersController {
 
                 stage.setScene(new Scene(loader.load()));
                 AddSupplierController controller = loader.getController();
+                controller.setSupplierDetails(selectedSupplier);
 
                 stage.showAndWait();
             } catch (Exception e) {
@@ -132,7 +131,7 @@ public class SuppliersController {
     //delete supplier from DB
     @FXML
     private void deleteSupplier() {
-        Suppliers selectedSupplier = tbvSupplier.getSelectionModel().getSelectedItem();
+        getSelectedSupplier();
         if (selectedSupplier != null) {
             Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, "are you sure you wish to delete this supplier?", ButtonType.YES, ButtonType.NO);
             confirmationAlert.showAndWait().ifPresent(response -> {
@@ -144,6 +143,15 @@ public class SuppliersController {
             });
         } else {
             showAlert("Error", "No supplier selected.");
+        }
+    }
+
+    private void getSelectedSupplier() {
+        try {
+            selectedSupplier = tbvSupplier.getSelectionModel().getSelectedItem();
+            System.out.println(selectedSupplier);
+        } catch (Exception e) {
+            System.out.println("There was a problem getting the selected supplier");
         }
     }
 

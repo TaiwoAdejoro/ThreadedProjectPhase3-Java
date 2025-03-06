@@ -40,6 +40,18 @@ public class AddSupplierController {
 
     private final SuppliersDAO supplierDao = new SuppliersDAO();
 
+    private Suppliers selectedSupplier;
+
+    private boolean isEditMode = false;
+
+    public void setSupplierDetails(Suppliers selectedSupplier) {
+        if (selectedSupplier != null) {
+            isEditMode = true;
+            txtSuppId.setText(String.valueOf(selectedSupplier.getSupplierId()));
+            txtSuppName.setText(selectedSupplier.getSupplierName());
+        }
+    }
+
     @FXML
     void initialize() {
         assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'Suppliers_editor_view.fxml'.";
@@ -51,39 +63,52 @@ public class AddSupplierController {
 
         btnAdd.setOnAction(event -> {
             addSupplier(Integer.parseInt(txtSuppId.getText()), txtSuppName.getText());
+            closeWindow();
         });
 
         btnExit.setOnAction(event -> {
-            try {
-                exit();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            closeWindow();
         });
     }
 
-    private void addSupplier(int Id, String Name) {
-        int id = Integer.parseInt(txtSuppId.getText());
-        String name = txtSuppName.getText();
+    private void addSupplier(int id, String Name) {
+        if (txtSuppId.getText().isEmpty()) {
+            showAlert("Error", "Please enter a Supplier ID");
+            return;
+        }
+        if (txtSuppName.getText().isEmpty()) {
+            showAlert("Error", "Please enter a Supplier Name");
+            return;
+        }
+        id = Integer.parseInt(txtSuppId.getText());
+        Name = txtSuppName.getText();
 
-        supplierDao.addSupplier(id, name);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like to add a new supplier?", ButtonType.YES, ButtonType.NO);
-        Optional<ButtonType> result = alert.showAndWait();
-        result.ifPresent(buttonType -> {
-            if (buttonType == ButtonType.YES) {
+        supplierDao.addSupplier(id, Name);
 
-            }
-        });
+
+        if (isEditMode) {
+            txtSuppId.setText(Integer.toString(id));
+            txtSuppId.isDisabled();
+            txtSuppName.setText(Name);
+
+            selectedSupplier.setSupplierId(id);
+            selectedSupplier.setSupplierName(Name);
+
+            supplierDao.updateSupplier(selectedSupplier);
+        }
     }
 
-    @FXML
-    private void exit() throws IOException {
-        FXMLLoader loader = new FXMLLoader(SuppliersApplication.class.getResource("Suppliers-view.fxml"));
-        Stage stage = new Stage();
-        stage.setTitle("Suppliers Table");
-        stage.setScene(new Scene(loader.load()));
-        SuppliersController suppliersController = loader.getController();
-        stage.showAndWait();
+    //display Alert
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
+    private void closeWindow() {
+        Stage stage = (Stage) btnAdd.getScene().getWindow();
+        stage.close();
+    }
 }
