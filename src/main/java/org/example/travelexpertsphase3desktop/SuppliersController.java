@@ -63,15 +63,25 @@ public class SuppliersController {
         btnAdd.setOnAction(e -> {
             try {
                 addSupplierWindow();
+                getSuppliers();
+                tbvSupplier.setItems(suppliers);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
         btnEdit.setOnAction(e -> {
-           try {editSupplier();} catch (IOException ex) {throw new RuntimeException(ex);}
+           try {
+               editSupplier();
+               getSuppliers();
+               tbvSupplier.setItems(suppliers);
+           } catch (IOException ex) {
+               throw new RuntimeException(ex);
+           }
         });
         btnDelete.setOnAction(e -> {
             deleteSupplier();
+            getSuppliers();
+            tbvSupplier.setItems(suppliers);
         });
     }
 
@@ -79,7 +89,6 @@ public class SuppliersController {
     private void setTableColumnData() {
         colSuppId.setCellValueFactory(cellData -> cellData.getValue().supplierIdProperty().asObject());
         colSuppName.setCellValueFactory(cellData -> cellData.getValue().supplierNameProperty());
-        ;
     }
 
     //retrieve Supplier Data from DB
@@ -136,7 +145,7 @@ public class SuppliersController {
             Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, "are you sure you wish to delete this supplier?", ButtonType.YES, ButtonType.NO);
             confirmationAlert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES) {
-                    suppliersDAO.deleteSupplier(selectedSupplier);
+                    suppliersDAO.deleteSupplier(selectedSupplier.getSupplierId());
                 } else {
                     showAlert("Error", "Failed to delete supplier.");
                 }

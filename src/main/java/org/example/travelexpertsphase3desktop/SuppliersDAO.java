@@ -27,7 +27,6 @@ public class SuppliersDAO {
                 String supplierName = rs.getString("SupName");
                 Suppliers supp = new Suppliers(supplierId, supplierName);
                 suppliersList.add(supp);
-                System.out.println(supplierName);
             }
         } catch (SQLException e) {
             System.out.println("There was an error connecting to the database");
@@ -52,7 +51,7 @@ public class SuppliersDAO {
     }
 
     public void updateSupplier(Suppliers supplier) {
-        String query = "update suppliers set supplier_name=? where supplier_id=?";
+        String query = "update supplier set SupName=? where SupplierId=?";
 
         try (Connection conn = DBconnection.getConnection();
              PreparedStatement stmnt = conn.prepareStatement(query)) {
@@ -66,12 +65,12 @@ public class SuppliersDAO {
         }
     }
 
-    public void deleteSupplier(Suppliers supplier) {
-        String query = "delete from suppliers where supplier_id=?";
+    public void deleteSupplier(int supplierId) {
+        String query = "delete from suppliers where SupplierId=?";
         try (Connection conn = DBconnection.getConnection();
         PreparedStatement stmnt = conn.prepareStatement(query)) {
             //check for supplier ID for deletion
-            stmnt.setInt(1, supplier.getSupplierId());
+            stmnt.setInt(1, supplierId);
             stmnt.executeUpdate();
         } catch (SQLException r) {
             System.out.println("There was an error connecting to the database");
