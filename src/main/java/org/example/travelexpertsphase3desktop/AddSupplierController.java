@@ -1,14 +1,9 @@
 package org.example.travelexpertsphase3desktop;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Supplier;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
@@ -21,7 +16,7 @@ public class AddSupplierController {
     private URL location;
 
     @FXML
-    private Button btnAdd;
+    private Button btnUpdate;
 
     @FXML
     private Button btnExit;
@@ -40,7 +35,7 @@ public class AddSupplierController {
 
     private final SuppliersDAO supplierDao = new SuppliersDAO();
 
-    private Suppliers selectedSupplier;
+    public Suppliers selectedSupplier;
 
     private boolean isEditMode = false;
 
@@ -48,20 +43,24 @@ public class AddSupplierController {
         if (selectedSupplier != null) {
             isEditMode = true;
             txtSuppId.setText(String.valueOf(selectedSupplier.getSupplierId()));
+            txtSuppId.setDisable(true);
             txtSuppName.setText(selectedSupplier.getSupplierName());
         }
     }
 
     @FXML
     void initialize() {
-        assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'Suppliers_editor_view.fxml'.";
+        assert btnUpdate != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'Suppliers_editor_view.fxml'.";
         assert btnExit != null : "fx:id=\"btnExit\" was not injected: check your FXML file 'Suppliers_editor_view.fxml'.";
         assert lblSuppId != null : "fx:id=\"lblSuppId\" was not injected: check your FXML file 'Suppliers_editor_view.fxml'.";
         assert lblSuppName != null : "fx:id=\"lblSuppName\" was not injected: check your FXML file 'Suppliers_editor_view.fxml'.";
         assert txtSuppId != null : "fx:id=\"txtSuppId\" was not injected: check your FXML file 'Suppliers_editor_view.fxml'.";
         assert txtSuppName != null : "fx:id=\"txtSuppName\" was not injected: check your FXML file 'Suppliers_editor_view.fxml'.";
 
-        btnAdd.setOnAction(event -> {
+        btnUpdate.setOnAction(event -> {
+            if (isEditMode) {
+                updateSupplier(selectedSupplier);
+            }
             addSupplier(Integer.parseInt(txtSuppId.getText()), txtSuppName.getText());
             closeWindow();
         });
@@ -84,17 +83,13 @@ public class AddSupplierController {
         Name = txtSuppName.getText();
 
         supplierDao.addSupplier(id, Name);
+    }
 
-
-        if (isEditMode) {
-            txtSuppId.setText(Integer.toString(id));
-            txtSuppName.setText(Name);
-
-            selectedSupplier.setSupplierId(id);
-            selectedSupplier.setSupplierName(Name);
+    private void updateSupplier(Suppliers selectedSupplier) {
+            selectedSupplier.setSupplierId(Integer.parseInt(txtSuppId.getText()));
+            selectedSupplier.setSupplierName(txtSuppName.getText());
 
             supplierDao.updateSupplier(selectedSupplier);
-        }
     }
 
     //display Alert
@@ -107,7 +102,7 @@ public class AddSupplierController {
     }
 
     private void closeWindow() {
-        Stage stage = (Stage) btnAdd.getScene().getWindow();
+        Stage stage = (Stage) btnUpdate.getScene().getWindow();
         stage.close();
     }
 }

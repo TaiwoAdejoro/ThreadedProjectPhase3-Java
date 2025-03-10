@@ -49,7 +49,7 @@
       </VBox>
       <HBox alignment="CENTER" layoutX="143.0" layoutY="223.0" prefHeight="111.0" prefWidth="313.0" spacing="35.0">
          <children>
-            <Button fx:id="btnAdd" mnemonicParsing="false" text="Update Supplier Database">
+            <Button fx:id="btnUpdate" mnemonicParsing="false" text="Update Supplier Database">
                <font>
                   <Font size="14.0" />
                </font>

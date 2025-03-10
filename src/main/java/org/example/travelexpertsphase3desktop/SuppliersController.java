@@ -73,7 +73,7 @@ public class SuppliersController {
             try {
                 addSupplierWindow();
                 getSuppliers();
-                tbvSupplier.setItems(suppliers);
+                tbvSupplier.setItems(filteredData);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -82,7 +82,7 @@ public class SuppliersController {
             try {
                 editSupplier();
                 getSuppliers();
-                tbvSupplier.setItems(suppliers);
+                tbvSupplier.setItems(filteredData);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -90,7 +90,7 @@ public class SuppliersController {
         btnDelete.setOnAction(e -> {
             deleteSupplier();
             getSuppliers();
-            tbvSupplier.setItems(suppliers);
+            tbvSupplier.setItems(filteredData);
         });
     }
 
