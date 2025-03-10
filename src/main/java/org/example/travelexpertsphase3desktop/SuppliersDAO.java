@@ -1,6 +1,7 @@
 package org.example.travelexpertsphase3desktop;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,7 +44,14 @@ public class SuppliersDAO {
             //receive supplier Information to input into database
             stmnt.setInt(1, supplierId);
             stmnt.setString(2, supplierName);
-            stmnt.executeUpdate();
+            try {
+                stmnt.executeUpdate();
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Sorry, That supplier ID already exists");
+            }
         } catch (SQLException e) {
             System.out.println("There was an error connecting to the database");
             e.printStackTrace();

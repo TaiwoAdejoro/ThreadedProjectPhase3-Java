@@ -88,7 +88,6 @@ public class AddSupplierController {
 
         if (isEditMode) {
             txtSuppId.setText(Integer.toString(id));
-            txtSuppId.isDisabled();
             txtSuppName.setText(Name);
 
             selectedSupplier.setSupplierId(id);

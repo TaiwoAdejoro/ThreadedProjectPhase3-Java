@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -43,6 +44,8 @@ public class SuppliersController {
 
     private Suppliers selectedSupplier;
 
+    private FilteredList<Suppliers> filteredData;
+
 
     @FXML
     void initialize() throws SQLException {
@@ -58,7 +61,13 @@ public class SuppliersController {
         //load SuppliersDB into TableView
         getSuppliers();
 
-        tbvSupplier.setItems(suppliers);
+        //filtered list based on search bar
+        filteredData = new FilteredList<>(suppliers);
+
+        //add listener to search bar for filtered list
+        txtSupplier.textProperty().addListener((observable, oldValue, newValue) -> filterSuppliers(newValue));
+
+        tbvSupplier.setItems(filteredData);
 
         btnAdd.setOnAction(e -> {
             try {
@@ -70,13 +79,13 @@ public class SuppliersController {
             }
         });
         btnEdit.setOnAction(e -> {
-           try {
-               editSupplier();
-               getSuppliers();
-               tbvSupplier.setItems(suppliers);
-           } catch (IOException ex) {
-               throw new RuntimeException(ex);
-           }
+            try {
+                editSupplier();
+                getSuppliers();
+                tbvSupplier.setItems(suppliers);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
         btnDelete.setOnAction(e -> {
             deleteSupplier();
@@ -89,6 +98,19 @@ public class SuppliersController {
     private void setTableColumnData() {
         colSuppId.setCellValueFactory(cellData -> cellData.getValue().supplierIdProperty().asObject());
         colSuppName.setCellValueFactory(cellData -> cellData.getValue().supplierNameProperty());
+    }
+
+    //method to filter based on search data
+    private void filterSuppliers(String filterText) {
+        filteredData.setPredicate(suppliers -> {
+            if (filterText.isEmpty() || filterText == null) {
+                return true;
+            }
+            String lowerCaseFilterText = filterText.toLowerCase();
+
+            return suppliers.supplierIdProperty().getValue().toString().toLowerCase().contains(lowerCaseFilterText) ||
+                    suppliers.supplierNameProperty().getValue().toLowerCase().contains(lowerCaseFilterText);
+        });
     }
 
     //retrieve Supplier Data from DB
