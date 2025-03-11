@@ -92,7 +92,7 @@ public class PackageManagementController {
 
     private void openPackageForm(Package pkg) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AddPackage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/travelexpertsphase3desktop/Add-packages-view.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
             stage.initModality(Modality.APPLICATION_MODAL);
