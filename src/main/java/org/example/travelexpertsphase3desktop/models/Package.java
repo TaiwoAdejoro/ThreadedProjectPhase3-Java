@@ -5,15 +5,18 @@ import javafx.beans.property.*;
 import java.time.LocalDate;
 
 public class Package {
-    private IntegerProperty packageId;
-    private StringProperty packageName;
-    private ObjectProperty<LocalDate> pkgStartDate;
-    private ObjectProperty<LocalDate> pkgEndDate;
-    private StringProperty pkgDesc;
-    private DoubleProperty pkgBasePrice;
-    private DoubleProperty pkgAgencyCommission;
+    private SimpleIntegerProperty packageId;
+    private SimpleStringProperty packageName;
+    private SimpleObjectProperty<LocalDate> pkgStartDate;
+    private SimpleObjectProperty<LocalDate> pkgEndDate;
+    private SimpleStringProperty pkgDesc;
+    private SimpleDoubleProperty pkgBasePrice;
+    private SimpleDoubleProperty pkgAgencyCommission;
+    private SimpleStringProperty productSuppliers;
 
-    public Package(int packageId, String packageName, LocalDate pkgStartDate, LocalDate pkgEndDate, String pkgDesc, Double pkgBasePrice, Double pkgAgencyCommission) {
+    // Constructor
+    public Package(int packageId, String packageName, LocalDate pkgStartDate, LocalDate pkgEndDate,
+                   String pkgDesc, double pkgBasePrice, double pkgAgencyCommission, String productSuppliers) {
         this.packageId = new SimpleIntegerProperty(packageId);
         this.packageName = new SimpleStringProperty(packageName);
         this.pkgStartDate = new SimpleObjectProperty<>(pkgStartDate);
@@ -21,89 +24,105 @@ public class Package {
         this.pkgDesc = new SimpleStringProperty(pkgDesc);
         this.pkgBasePrice = new SimpleDoubleProperty(pkgBasePrice);
         this.pkgAgencyCommission = new SimpleDoubleProperty(pkgAgencyCommission);
+        this.productSuppliers = new SimpleStringProperty(productSuppliers);
     }
 
+    // Getters
     public int getPackageId() {
         return packageId.get();
-    }
-
-    public void setPackageId(int packageId) {
-        this.packageId.set(packageId);
-    }
-
-    public IntegerProperty packageIdProperty() {
-        return packageId;
     }
 
     public String getPackageName() {
         return packageName.get();
     }
 
-    public void setPackageName(String packageName) {
-        this.packageName.set(packageName);
-    }
-
-    public StringProperty packageNameProperty() {
-        return packageName;
-    }
-
     public LocalDate getPkgStartDate() {
         return pkgStartDate.get();
-    }
-
-    public void setPkgStartDate(LocalDate pkgStartDate) {
-        this.pkgStartDate.set(pkgStartDate);
-    }
-
-    public ObjectProperty<LocalDate> pkgStartDateProperty() {
-        return pkgStartDate;
     }
 
     public LocalDate getPkgEndDate() {
         return pkgEndDate.get();
     }
 
-    public void setPkgEndDate(LocalDate pkgEndDate) {
-        this.pkgEndDate.set(pkgEndDate);
-    }
-
-    public ObjectProperty<LocalDate> pkgEndDateProperty() {
-        return pkgEndDate;
-    }
-
     public String getPkgDesc() {
         return pkgDesc.get();
-    }
-
-    public void setPkgDesc(String pkgDesc) {
-        this.pkgDesc.set(pkgDesc);
-    }
-
-    public StringProperty pkgDescProperty() {
-        return pkgDesc;
     }
 
     public double getPkgBasePrice() {
         return pkgBasePrice.get();
     }
 
-    public void setPkgBasePrice(double pkgBasePrice) {
-        this.pkgBasePrice.set(pkgBasePrice);
+    public double getPkgAgencyCommission() {
+        return pkgAgencyCommission.get();
     }
 
-    public DoubleProperty pkgBasePriceProperty() {
+    public String getProductSuppliers() {
+        return productSuppliers.get();
+    }
+
+    // Property getters (useful for TableView bindings)
+    public SimpleIntegerProperty packageIdProperty() {
+        return packageId;
+    }
+
+    public SimpleStringProperty packageNameProperty() {
+        return packageName;
+    }
+
+    public SimpleObjectProperty<LocalDate> pkgStartDateProperty() {
+        return pkgStartDate;
+    }
+
+    public SimpleObjectProperty<LocalDate> pkgEndDateProperty() {
+        return pkgEndDate;
+    }
+
+    public SimpleStringProperty pkgDescProperty() {
+        return pkgDesc;
+    }
+
+    public SimpleDoubleProperty pkgBasePriceProperty() {
         return pkgBasePrice;
     }
 
-    public double getPkgAgencyCommission() {
-        return pkgAgencyCommission.get();
+    public SimpleDoubleProperty pkgAgencyCommissionProperty() {
+        return pkgAgencyCommission;
+    }
+
+    public SimpleStringProperty productSuppliersProperty() {
+        return productSuppliers;
+    }
+
+    // Setters
+    public void setPackageId(int packageId) {
+        this.packageId.set(packageId);
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName.set(packageName);
+    }
+
+    public void setPkgStartDate(LocalDate pkgStartDate) {
+        this.pkgStartDate.set(pkgStartDate);
+    }
+
+    public void setPkgEndDate(LocalDate pkgEndDate) {
+        this.pkgEndDate.set(pkgEndDate);
+    }
+
+    public void setPkgDesc(String pkgDesc) {
+        this.pkgDesc.set(pkgDesc);
+    }
+
+    public void setPkgBasePrice(double pkgBasePrice) {
+        this.pkgBasePrice.set(pkgBasePrice);
     }
 
     public void setPkgAgencyCommission(double pkgAgencyCommission) {
         this.pkgAgencyCommission.set(pkgAgencyCommission);
     }
 
-    public DoubleProperty pkgAgencyCommissionProperty() {
-        return pkgAgencyCommission;
+    public void setProductSuppliers(String productSuppliers) {
+        this.productSuppliers.set(productSuppliers);
     }
 }
