@@ -149,6 +149,7 @@ public class SuppliersController {
                 stage.setScene(new Scene(loader.load()));
                 AddSupplierController controller = loader.getController();
                 controller.setSupplierDetails(selectedSupplier);
+                System.out.println(selectedSupplier);
 
                 stage.showAndWait();
             } catch (Exception e) {

@@ -39,15 +39,6 @@ public class AddSupplierController {
 
     private boolean isEditMode = false;
 
-    public void setSupplierDetails(Suppliers selectedSupplier) {
-        if (selectedSupplier != null) {
-            isEditMode = true;
-            txtSuppId.setText(String.valueOf(selectedSupplier.getSupplierId()));
-            txtSuppId.setDisable(true);
-            txtSuppName.setText(selectedSupplier.getSupplierName());
-        }
-    }
-
     @FXML
     void initialize() {
         assert btnUpdate != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'Suppliers_editor_view.fxml'.";
@@ -57,11 +48,14 @@ public class AddSupplierController {
         assert txtSuppId != null : "fx:id=\"txtSuppId\" was not injected: check your FXML file 'Suppliers_editor_view.fxml'.";
         assert txtSuppName != null : "fx:id=\"txtSuppName\" was not injected: check your FXML file 'Suppliers_editor_view.fxml'.";
 
+        setSupplierDetails(selectedSupplier);
+
         btnUpdate.setOnAction(event -> {
             if (isEditMode) {
-                updateSupplier(selectedSupplier);
+                updateSupplier(Integer.parseInt(txtSuppId.getText()), txtSuppName.getText());
+            } else {
+                addSupplier(Integer.parseInt(txtSuppId.getText()), txtSuppName.getText());
             }
-            addSupplier(Integer.parseInt(txtSuppId.getText()), txtSuppName.getText());
             closeWindow();
         });
 
@@ -85,11 +79,24 @@ public class AddSupplierController {
         supplierDao.addSupplier(id, Name);
     }
 
-    private void updateSupplier(Suppliers selectedSupplier) {
-            selectedSupplier.setSupplierId(Integer.parseInt(txtSuppId.getText()));
-            selectedSupplier.setSupplierName(txtSuppName.getText());
+    private void updateSupplier(Integer supplierId, String Name) {
+//        selectedSupplier.setSupplierId(Integer.parseInt(txtSuppId.getText()));
+//        selectedSupplier.setSupplierName(txtSuppName.getText());
+//        System.out.println(selectedSupplier);
 
-            supplierDao.updateSupplier(selectedSupplier);
+        Name = txtSuppName.getText();
+        supplierId = Integer.parseInt(txtSuppId.getText());
+
+        supplierDao.updateSupplier(Name, supplierId);
+    }
+
+    public void setSupplierDetails(Suppliers selectedSupplier) {
+        if (selectedSupplier != null) {
+            isEditMode = true;
+            txtSuppId.setText(String.valueOf(selectedSupplier.getSupplierId()));
+            txtSuppId.setDisable(true);
+            txtSuppName.setText(selectedSupplier.getSupplierName());
+        }
     }
 
     //display Alert

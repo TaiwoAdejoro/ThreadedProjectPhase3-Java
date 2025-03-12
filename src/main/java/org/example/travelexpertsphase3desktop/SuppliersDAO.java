@@ -1,6 +1,5 @@
 package org.example.travelexpertsphase3desktop;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
@@ -58,16 +57,20 @@ public class SuppliersDAO {
         }
     }
 
-    public void updateSupplier(Suppliers supplier) {
-        String query = "update supplier set SupName=? where SupplierId=?";
+    public void updateSupplier(String supplierName, Integer supplierId) {
+        String query = "update suppliers set SupName=? where SupplierId=?";
 
         try (Connection conn = DBconnection.getConnection();
              PreparedStatement stmnt = conn.prepareStatement(query)) {
             //receive supplier name and id for update
-            stmnt.setString(1, supplier.getSupplierName());
-            stmnt.setInt(2, supplier.getSupplierId());
+            stmnt.setString(1, supplierName);
+            stmnt.setInt(2, supplierId);
             stmnt.executeUpdate();
         } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Sorry, There was an error updating the supplier");
             System.out.println("There was an error connecting to the database");
             e.printStackTrace();
         }
