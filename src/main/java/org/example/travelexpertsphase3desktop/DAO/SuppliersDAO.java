@@ -1,6 +1,8 @@
-package org.example.travelexpertsphase3desktop;
+package org.example.travelexpertsphase3desktop.DAO;
 
 import javafx.scene.control.Alert;
+import org.example.travelexpertsphase3desktop.DBconnection;
+import org.example.travelexpertsphase3desktop.model.Suppliers;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class SuppliersDAO {
     public static List<Suppliers> getSuppliers() {
         List<Suppliers> suppliersList = new ArrayList<>();
         DBconnection db = new DBconnection();
-        String query = "select * from suppliers";
+        String query = "select * from suppliers inner join products_suppliers on suppliers.SupplierId=products_suppliers.SupplierId";
 
         try (Connection conn = db.getConnection();
              Statement stmnt = conn.createStatement();
@@ -25,7 +27,8 @@ public class SuppliersDAO {
             while (rs.next()) {
                 int supplierId = rs.getInt("SupplierID");
                 String supplierName = rs.getString("SupName");
-                Suppliers supp = new Suppliers(supplierId, supplierName);
+                int productId = rs.getInt("ProductId");
+                Suppliers supp = new Suppliers(supplierId, supplierName, productId);
                 suppliersList.add(supp);
             }
         } catch (SQLException e) {

@@ -1,4 +1,4 @@
-package org.example.travelexpertsphase3desktop;
+package org.example.travelexpertsphase3desktop.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.example.travelexpertsphase3desktop.DAO.SuppliersDAO;
+import org.example.travelexpertsphase3desktop.model.Suppliers;
 
 public class SuppliersController {
 
@@ -39,6 +41,9 @@ public class SuppliersController {
 
     @FXML
     private TableColumn<Suppliers, String> colSuppName;
+
+    @FXML
+    private TableColumn<Suppliers, Integer> colProductId;
 
     private final SuppliersDAO suppliersDAO = new SuppliersDAO();
 
@@ -98,6 +103,7 @@ public class SuppliersController {
     private void setTableColumnData() {
         colSuppId.setCellValueFactory(cellData -> cellData.getValue().supplierIdProperty().asObject());
         colSuppName.setCellValueFactory(cellData -> cellData.getValue().supplierNameProperty());
+        colProductId.setCellValueFactory(cellData -> cellData.getValue().productIdProperty().asObject());
     }
 
     //method to filter based on search data

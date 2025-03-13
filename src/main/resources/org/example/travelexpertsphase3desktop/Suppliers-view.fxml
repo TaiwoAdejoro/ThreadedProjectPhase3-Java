@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="TOP_CENTER" prefHeight="376.0" prefWidth="534.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertsphase3desktop.SuppliersController">
+<VBox alignment="TOP_CENTER" prefHeight="376.0" prefWidth="534.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertsphase3desktop.controller.SuppliersController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -17,8 +17,9 @@
       </HBox>
       <TableView fx:id="tbvSupplier" prefHeight="254.0" prefWidth="494.0">
         <columns>
-          <TableColumn fx:id="colSuppId" prefWidth="75.0" text="Supplier Id" />
-          <TableColumn fx:id="colSuppName" prefWidth="215.1999969482422" text="Supplier Name" />
+          <TableColumn fx:id="colSuppId" prefWidth="88.20001220703125" text="Supplier Id" />
+          <TableColumn fx:id="colSuppName" prefWidth="267.79998779296875" text="Supplier Name" />
+            <TableColumn fx:id="colProductId" prefWidth="136.80002441406248" text="Supplier Product Id" />
         </columns>
       </TableView>
       <HBox alignment="CENTER" prefHeight="25.0" prefWidth="494.0" spacing="60.0">

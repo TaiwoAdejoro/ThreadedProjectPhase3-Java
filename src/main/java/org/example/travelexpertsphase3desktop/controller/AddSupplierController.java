@@ -1,4 +1,4 @@
-package org.example.travelexpertsphase3desktop;
+package org.example.travelexpertsphase3desktop.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.example.travelexpertsphase3desktop.DAO.SuppliersDAO;
+import org.example.travelexpertsphase3desktop.model.Suppliers;
 
 public class AddSupplierController {
 

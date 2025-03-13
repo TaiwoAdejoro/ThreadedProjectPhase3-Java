@@ -1,4 +1,4 @@
-package org.example.travelexpertsphase3desktop;
+package org.example.travelexpertsphase3desktop.model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -8,10 +8,12 @@ import javafx.beans.property.StringProperty;
 public class Suppliers {
     private IntegerProperty supplierId;
     private StringProperty supplierName;
+    private IntegerProperty productId;
 
-    public Suppliers(int supplierId, String supplierName) {
+    public Suppliers(int supplierId, String supplierName, int productId) {
         this.supplierId = new SimpleIntegerProperty(supplierId);
         this.supplierName = new SimpleStringProperty(supplierName);
+        this.productId = new SimpleIntegerProperty(productId);
     }
 
     public int getSupplierId() {
@@ -38,11 +40,24 @@ public class Suppliers {
         return supplierName;
     }
 
+    public int getProductId() {
+        return productId.get();
+    }
+
+    public IntegerProperty productIdProperty() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId.set(productId);
+    }
+
     @Override
     public String toString() {
         return "Suppliers{" +
                 "supplierId=" + supplierId +
                 ", supplierName=" + supplierName +
+                ", productId=" + productId +
                 '}';
     }
 }
