@@ -166,17 +166,61 @@ public class PackageDAO {
 
     // Delete a package
     public static boolean deletePackage(int packageId) {
-        String query = "DELETE FROM Packages WHERE PackageId = ?";
+        Connection conn = null;
+        PreparedStatement deleteRelationsStmt = null;
+        PreparedStatement deletePackageStmt = null;
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        try {
+            conn = DBConnection.getConnection();
+            conn.setAutoCommit(false); // Start transaction
 
-            stmt.setInt(1, packageId);
-            int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+            // Step 1: Delete related records first
+            deleteRelationsStmt = conn.prepareStatement("DELETE FROM packages_products_suppliers WHERE PackageId = ?");
+            deleteRelationsStmt.setInt(1, packageId);
+            deleteRelationsStmt.executeUpdate();
+
+            // Step 2: Delete the package
+            deletePackageStmt = conn.prepareStatement("DELETE FROM packages WHERE PackageId = ?");
+            deletePackageStmt.setInt(1, packageId);
+            int rowsDeleted = deletePackageStmt.executeUpdate();
+
+            conn.commit(); // Commit transaction
+            return rowsDeleted > 0;
+
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback(); // Rollback if error occurs
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
+            }
             e.printStackTrace();
             return false;
+
+        } finally {
+            // Close resources safely
+            if (deleteRelationsStmt != null) {
+                try {
+                    deleteRelationsStmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (deletePackageStmt != null) {
+                try {
+                    deletePackageStmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
