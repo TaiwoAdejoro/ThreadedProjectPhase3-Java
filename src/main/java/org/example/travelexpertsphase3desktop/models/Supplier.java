@@ -9,12 +9,24 @@ public class Supplier {
         this.supplierName = supplierName;
     }
 
-    public int getSupplierId() { return supplierId; }
-    public String getSupplierName() { return supplierName; }
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
 
     @Override
     public String toString() {
-        return supplierName; // This ensures the ComboBox displays supplier names
+        return supplierName;
     }
 }
-

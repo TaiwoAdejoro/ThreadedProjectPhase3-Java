@@ -2,6 +2,8 @@ package org.example.travelexpertsphase3desktop.dao;
 
 import org.example.travelexpertsphase3desktop.database.DBConnection;
 import org.example.travelexpertsphase3desktop.models.Package;
+import org.example.travelexpertsphase3desktop.models.Product;
+import org.example.travelexpertsphase3desktop.models.Supplier;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -46,6 +48,57 @@ public class PackageDAO {
         }
         return packageList;
     }
+
+    public static Product getProductForPackage(Package pkg) {
+        String query = """
+        SELECT pr.ProductId, pr.ProdName
+        FROM Products pr
+        JOIN Products_Suppliers ps ON pr.ProductId = ps.ProductId
+        JOIN Packages_Products_Suppliers pps ON ps.ProductSupplierId = pps.ProductSupplierId
+        WHERE pps.PackageId = ?
+        LIMIT 1
+    """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, pkg.getPackageId());
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Product(rs.getInt("ProductId"), rs.getString("ProdName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if no product is found
+    }
+
+    public static Supplier getSupplierForPackage(Package pkg) {
+        String query = """
+        SELECT s.SupplierId, s.SupName
+        FROM Suppliers s
+        JOIN Products_Suppliers ps ON s.SupplierId = ps.SupplierId
+        JOIN Packages_Products_Suppliers pps ON ps.ProductSupplierId = pps.ProductSupplierId
+        WHERE pps.PackageId = ?
+        LIMIT 1
+    """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, pkg.getPackageId());
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Supplier(rs.getInt("SupplierId"), rs.getString("SupName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if no supplier is found
+    }
+
 
     // Insert a new package
     public static boolean insertPackage(Package pkg, int productId, int supplierId) {

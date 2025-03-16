@@ -58,14 +58,24 @@ public class AddPackageController {
     }
 
     // Set package data if editing an existing package
-    public void setPackageData(Package pkg) {
+    public void setPackageData(Package pkg, Product product, Supplier supplier) {
         this.currentPackage = pkg;
+        //Set package details
         tfPkgName.setText(pkg.getPackageName());
         dpStartDate.setValue(pkg.getPkgStartDate());
         dpEndDate.setValue(pkg.getPkgEndDate());
         tfPkgDesc.setText(pkg.getPkgDesc());
         tfBasePrice.setText(String.valueOf(pkg.getPkgBasePrice()));
         tfAgencyCommission.setText(String.valueOf(pkg.getPkgAgencyCommission()));
+
+        //load and pre-select product
+        loadProducts();
+        cbProducts.setValue(product);
+        //load and pre-select supplier
+        if (product != null) {
+            loadSuppliers(product.getProductId());
+            cbSuppliers.setValue(supplier);
+        }
     }
 
     // Handle Save button click

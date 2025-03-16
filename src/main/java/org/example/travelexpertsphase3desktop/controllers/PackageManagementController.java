@@ -11,6 +11,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.travelexpertsphase3desktop.dao.PackageDAO;
 import org.example.travelexpertsphase3desktop.models.Package;
+import org.example.travelexpertsphase3desktop.models.Product;
+import org.example.travelexpertsphase3desktop.models.Supplier;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -100,8 +102,11 @@ public class PackageManagementController {
 
             AddPackageController controller = loader.getController();
             if (pkg != null) {
-                controller.setPackageData(pkg);
+                Product product = PackageDAO.getProductForPackage(pkg);
+                Supplier supplier = PackageDAO.getSupplierForPackage(pkg);
+                controller.setPackageData(pkg, product, supplier);
             }
+
 
             stage.showAndWait();
             loadPackages(); // Refresh table after closing form
