@@ -2,17 +2,20 @@ package org.example.travelexpertsphase3desktop.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.example.travelexpertsphase3desktop.utils.DbConfig;
 
 import java.sql.*;
 
 public class CustomerDB {
     //establish connection to database
     public static Connection getConnection(){
-        Connection con;
-        String url = "jdbc:mysql://localhost:3306/TravelExperts";
+        //String url = DbConfig.getProperty("url");
+        //String user = DbConfig.getProperty("user");
+        //String password = DbConfig.getProperty("password");
+        String url = "jdbc:mysql://localhost:3306/travelexperts";
         String user = "root";
-        String password = "";
-
+        String password = "2187";
+        Connection con;
         try {
             con = DriverManager.getConnection(url,user,password);
         } catch (SQLException e) {
@@ -25,8 +28,8 @@ public class CustomerDB {
     public static ObservableList<Customer> getCustomers() throws SQLException{
         ObservableList<Customer> customers = FXCollections.observableArrayList();
         Customer customer;
-        Connection con = getConnection();
-        Statement stmt = con.createStatement();
+        Connection conn = getConnection();
+        Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM customers");
 
         while(rs.next()){
@@ -42,7 +45,8 @@ public class CustomerDB {
                     rs.getString(9),
                     rs.getString(10),
                     rs.getString(11),
-                    rs.getInt(12));
+                    rs.getInt(12)
+            );
             customers.add(customer);
 
         }
@@ -53,10 +57,10 @@ public class CustomerDB {
         public static int addCustomer(Customer customer) throws SQLException {
             Connection con = getConnection();
             int numAffectedRows = 0;
-            String sql =  "INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId) " +
-                          "VALUES(?.?.?.?.?.?.?.?.?.?.?)";
+            String sql =  "INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId) VALUES(?.?.?.?.?.?.?.?.?.?.?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             //stmt.setInt(1, customer.getCustomerId());
+
             stmt.setString(1,customer.getCustomerFirstName());
             stmt.setString(2,customer.getCustomerLastName());
             stmt.setString(3,customer.getCustomerAddress());
@@ -77,12 +81,7 @@ public class CustomerDB {
     public static int UpdateCustomer(int CustId,Customer customer) throws SQLException {
         Connection con = getConnection();
         int numAffectedRows = 0;
-        String sql =    "UPDATE customers SET CustFirstName = ?, CustLastName = ?, CustAddress = ?," +
-                        " CustCity = ?, CustProv = ?," +
-                        " CustPostal = ?, CustCountry = ?," +
-                        " CustHomePhone = ?, CustBusPhone = ?," +
-                        " CustEmail = ?, AgentId = ?" +
-                        " WHERE CustomerId = ?";
+        String sql = "UPDATE customers SET CustFirstName = ?, CustLastName = ?, CustAddress = ?, CustCity = ?, CustProv = ?, CustPostal = ?, CustCountry = ?, CustHomePhone = ?, CustBusPhone = ?, CustEmail = ?, AgentId = ? WHERE CustomerId = ?";
 
         PreparedStatement stmt = con.prepareStatement(sql);
         //stmt.setInt(1, customer.getCustomerId());
@@ -107,7 +106,7 @@ public class CustomerDB {
     }
 
     //delete a selected customer from DB
-    public static int deleteCustomer(int CustId) throws SQLException {
+    public static int deleteCustomers(int CustId) throws SQLException {
         int numAffectedRows = 0;
         Connection conn = getConnection();
         String sql = "DELETE FROM customers WHERE CustomerId = ?";

@@ -92,10 +92,6 @@ public class CustomerController {
 
     private String mode;
 
-
-
-
-
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert NewBut != null : "fx:id=\"NewBut\" was not injected: check your FXML file 'Customer.fxml'.";
@@ -123,7 +119,21 @@ public class CustomerController {
         NewBut.setOnAction(e -> {
             mode = "Add";
             CustomerEditor(null, mode);
-
+            FXMLLoader fxmlLoader = new FXMLLoader(CustomerApplication.class.getResource("CustomerAdd.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            CustomerAddController controller = fxmlLoader.getController();
+            controller.setMode(mode);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Customer Editor");
+            stage.setScene(scene);
+            stage.showAndWait();
+            displayCustomers();
 
         });
 
@@ -138,11 +148,8 @@ public class CustomerController {
                         mode = "Edit";
                         CustomerEditor(NewValue, mode);
                     });
-
                 }
             }
-
-
         });
     }
 

@@ -116,8 +116,6 @@ public class CustomerAddController {
     private Label provLbl; // Value injected by FXMLLoader
     private String mode;
 
-
-
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert addUpdateCustomer != null : "fx:id=\"addUpdateCustomer\" was not injected: check your FXML file 'CustomerAdd.fxml'.";
@@ -168,9 +166,9 @@ public class CustomerAddController {
         int numberOfRows = 0;
         int customerId = Integer.parseInt(custIdField.getText());
         try {
-            numberOfRows = CustomerDB.deleteCustomer(customerId);
+            numberOfRows = CustomerDB.deleteCustomers(customerId);
         } catch (SQLException e) {
-            //custAddAlert(Alert.AlertType.ERROR, " Deletion Failed");
+            custAddAlert(Alert.AlertType.ERROR, " Deletion Failed");
         }
         if(numberOfRows == 1){
             custAddAlert(Alert.AlertType.CONFIRMATION," Operation successful.");
@@ -199,6 +197,11 @@ public class CustomerAddController {
             } catch (SQLException e) {
                 custAddAlert(Alert.AlertType.ERROR, " Operation Failed" + e.getMessage());
             }
+        }
+        if (numberOfRows == 1) {
+            custAddAlert(Alert.AlertType.CONFIRMATION,"Customer added successfully.");
+        }else{
+            custAddAlert(Alert.AlertType.ERROR, "Operation Failed");
         }
 
         closeEditForm(event);
@@ -244,7 +247,7 @@ public class CustomerAddController {
     //set update or add mode for window
     public void setMode(String mode) {
         this.mode = mode;
-        //lblEditMode.setText(mode + " Customer Mode");---------------------------------------------
+        addUpdateCustomer.setText(mode + " Customer Mode");
         //deleteBut.setDisable(true);
         deleteBut.setDisable(mode.equalsIgnoreCase("add"));
     }
@@ -254,7 +257,7 @@ public class CustomerAddController {
         Alert alert = new Alert(type);
         alert.setTitle(type.toString());
         alert.setHeaderText(null);
-        alert.setContentText("Error retrieving data" + ErrorMes);
+        alert.setContentText(ErrorMes);
         alert.showAndWait();
     }
 
