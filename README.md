@@ -1,6 +1,6 @@
 # 🏨 Travel Experts - JavaFX Desktop Application
 
-**A project by Taiwo, Prince, Jonathan, Jenson, and Cantor.
+**A project by Taiwo,and Prince
 
 ---
 
