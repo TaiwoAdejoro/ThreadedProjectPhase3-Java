@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #eaa765;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertsphase3desktop.AgencyManagementController">
+   <top>
+      <Label text="Agency Management System" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <center>
+      <TableView fx:id="tvAgency" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="colAgencyId" prefWidth="75.0" text="Id" />
+          <TableColumn fx:id="colAgencyAddress" prefWidth="75.0" text="Address" />
+            <TableColumn fx:id="colAgencyCity" prefWidth="75.0" text="City" />
+            <TableColumn fx:id="colAgencyProvince" prefWidth="75.0" text="Province" />
+            <TableColumn fx:id="colAgencyPostal" prefWidth="75.0" text="Postal Code" />
+            <TableColumn fx:id="colAgencyCountry" prefWidth="75.0" text="Country" />
+            <TableColumn fx:id="colAgencyPhone" prefWidth="75.0" text="Phone" />
+            <TableColumn fx:id="colAgencyFax" prefWidth="75.0" text="Fax" />
+        </columns>
+      </TableView>
+   </center>
+   <bottom>
+      <Button fx:id="btnAddAgency" mnemonicParsing="false" text="Add Agency" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </bottom>
+</BorderPane>

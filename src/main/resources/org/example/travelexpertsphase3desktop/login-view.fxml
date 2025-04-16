@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertsphase3desktop.LoginController">
+   <left>
+      <AnchorPane prefHeight="407.0" prefWidth="228.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="407.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/traexp.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="370.0" prefWidth="285.0" style="-fx-background-color: #ECECE7;" stylesheets="@../../../Style/Dashboard.css" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="134.0" fitWidth="135.0" layoutX="62.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/logo.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="14.0" layoutY="191.0" text="Username">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfUsername" layoutX="79.0" layoutY="188.0" prefHeight="25.0" prefWidth="171.0" promptText="Username" />
+            <Label layoutX="16.0" layoutY="230.0" text="Password">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfPassword" layoutX="79.0" layoutY="227.0" prefHeight="25.0" prefWidth="171.0" promptText="Password" stylesheets="@../../../Style/Dashboard.css" />
+            <Button fx:id="btnLogin" layoutX="79.0" layoutY="283.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #E865111;" text="Login" />
+            <Button fx:id="btnCancel" layoutX="79.0" layoutY="338.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="102.0" style="-fx-background-color: #E865111;" text="Cancel" />
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

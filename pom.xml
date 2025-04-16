@@ -38,6 +38,8 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
@@ -67,7 +69,9 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
+
                                 org.example.travelexpertsphase3desktop/org.example.travelexpertsphase3desktop.PackageManagementApp
+
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
