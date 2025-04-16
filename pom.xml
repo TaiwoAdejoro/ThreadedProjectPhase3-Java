@@ -43,6 +43,7 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>9.1.0</version>
         </dependency>
+        
     </dependencies>
 
     <build>
