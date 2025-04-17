@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.example.travelexpertsphase3desktop.Utils.Validator;
 import org.example.travelexpertsphase3desktop.model.Customer;
 import org.example.travelexpertsphase3desktop.model.CustomerDB;
 
@@ -90,6 +91,7 @@ public class AddCustomerController {
         assert tfCustomerPostal != null : "fx:id=\"tfCustomerPostal\" was not injected: check your FXML file 'Add-customer-view.fxml'.";
         assert tfCustomerProvince != null : "fx:id=\"tfCustomerProvince\" was not injected: check your FXML file 'Add-customer-view.fxml'.";
 
+        btnDeleteCustomer.setVisible(false);
         btnCancelCustomer.setOnMouseClicked(event -> {
             closeWindow(event);
         });
@@ -120,7 +122,10 @@ public class AddCustomerController {
 
     @FXML
     void saveCustomer(MouseEvent event) {
-
+        // Validate input before saving**
+        if (!validateCustomerForm()) {
+            return;
+        }
         // Create a new Customer object from form inputs
         Customer customer = getCustomerFromForm();
 
@@ -248,5 +253,60 @@ public class AddCustomerController {
         tfCustomerEmail.setText(customer.getEmail());
         tfCustomerAgentId.setText(String.valueOf(customer.getAgentId()));
     }
+
+    private boolean validateCustomerForm() {
+        if (!Validator.isAlpha(tfCustomerFirstname.getText())) {
+            alertUser(Alert.AlertType.ERROR, "First name must only contain letters.");
+            return false;
+        }
+
+        if (!Validator.isAlpha(tfCustomerLastname.getText())) {
+            alertUser(Alert.AlertType.ERROR, "Last name must only contain letters.");
+            return false;
+        }
+
+        if (!Validator.isAlpha(tfCustomerCity.getText())) {
+            alertUser(Alert.AlertType.ERROR, "City must only contain letters.");
+            return false;
+        }
+
+        if (!Validator.isProvinceCode(tfCustomerProvince.getText())) {
+            alertUser(Alert.AlertType.ERROR, "Province code must be 2 uppercase letters.");
+            return false;
+        }
+
+        if (!Validator.isPostalCode(tfCustomerPostal.getText())) {
+            alertUser(Alert.AlertType.ERROR, "Invalid postal code format.");
+            return false;
+        }
+
+        if (!Validator.isAlpha(tfCustomerCountry.getText())) {
+            alertUser(Alert.AlertType.ERROR, "Country must only contain letters.");
+            return false;
+        }
+
+        if (!Validator.isPhoneNumber(tfCustomerHomePhone.getText())) {
+            alertUser(Alert.AlertType.ERROR, "Invalid home phone number.");
+            return false;
+        }
+
+        if (!Validator.isPhoneNumber(tfCustomerBusinessPhone.getText())) {
+            alertUser(Alert.AlertType.ERROR, "Invalid business phone number.");
+            return false;
+        }
+
+        if (!Validator.isValidEmail(tfCustomerEmail.getText())) {
+            alertUser(Alert.AlertType.ERROR, "Invalid email address.");
+            return false;
+        }
+
+        if (!Validator.isValidInteger(tfCustomerAgentId.getText())) {
+            alertUser(Alert.AlertType.ERROR, "Agent ID must be numeric.");
+            return false;
+        }
+
+        return true;
+    }
+
 
 }
