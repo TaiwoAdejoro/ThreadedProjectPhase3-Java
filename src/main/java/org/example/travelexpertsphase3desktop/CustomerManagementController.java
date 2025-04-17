@@ -107,6 +107,9 @@ public class CustomerManagementController {
         assert tfCustomerSearch != null : "fx:id=\"tfCustomerSearch\" was not injected: check your FXML file 'Customer-view.fxml'.";
         assert tvCustomer != null : "fx:id=\"tvCustomer\" was not injected: check your FXML file 'Customer-view.fxml'.";
 
+        // Hide Add button to prevent adding customers
+        btnAddCustomer.setVisible(false);
+
         //set up table columns
         setupCustomerTable();
         displayCustomer();
@@ -125,7 +128,7 @@ public class CustomerManagementController {
                         });
                     }
                 });
-
+        tfCustomerSearch.textProperty().addListener((observable, oldValue, newValue) -> searchCustomers(newValue));
 //        tvCustomer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Customer>() {
 //            @Override
 //            public void changed(ObservableValue<? extends Customer> observableValue, Customer oldValue, Customer newValue) {
@@ -153,11 +156,12 @@ public class CustomerManagementController {
             throw new RuntimeException(e);
         }
         AddCustomerController controller = fxmlLoader.getController();
-        controller.setMode(mode);
+        controller.setMode("Edit");
 
         // if editing an existing customer, pre fill add customer form with details of the agent being edited.
-        if(mode.equalsIgnoreCase("Edit")) {
+        if(mode.equalsIgnoreCase("Edit")) { // Always set mode to Edit to disable Add and Delete features
             controller.setCustomerForm(customer);
+
         }
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -196,6 +200,24 @@ public class CustomerManagementController {
         }
         //populate table view
         tvCustomer.setItems(data);
+    }
+
+    private void searchCustomers(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            tvCustomer.setItems(data);
+            return;
+        }
+
+        ObservableList<Customer> filteredList = FXCollections.observableArrayList();
+        for (Customer c : data) {
+            if (c.getFirstName().toLowerCase().contains(keyword.toLowerCase()) ||
+                    c.getLastName().toLowerCase().contains(keyword.toLowerCase()) ||
+                    c.getCity().toLowerCase().contains(keyword.toLowerCase()) ||
+                    c.getEmail().toLowerCase().contains(keyword.toLowerCase())) {
+                filteredList.add(c);
+            }
+        }
+        tvCustomer.setItems(filteredList);
     }
 }
 
