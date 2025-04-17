@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertsphase3desktop.controllers.AddPackageController">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Label text="Add/Edit Package" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Package Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="tfPkgName" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Start Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpStartDate" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="End Date:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpEndDate" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Description:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextArea fx:id="tfPkgDesc" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Base Price:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="tfBasePrice" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Agency Commission:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <TextField fx:id="tfAgencyCommission" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        <Label text="Select Product:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbProducts" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+        <Label text="Select Supplier:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbSuppliers" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="10">
+        <Button text="Save" fx:id="btnSave" onAction="#savePackage"/>
+        <Button text="Cancel" fx:id="btnCancel" onAction="#cancel"/>
+    </HBox>
+</VBox>
